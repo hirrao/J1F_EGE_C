@@ -13,21 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
+    <Filter Include="资源文件\IMAGES">
+      <UniqueIdentifier>{c5a2ed23-2f73-4bdf-aa29-c6f9cb8931a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="open.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="files.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="draw.cpp">
+    <ClCompile Include="options.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="options.cpp">
+    <ClCompile Include="help.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="draws.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pdraw.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="drimage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,5 +50,35 @@
     <ClInclude Include="head.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\help.jpg">
+      <Filter>资源文件\IMAGES</Filter>
+    </Image>
+    <Image Include="resources\mouses.jpg">
+      <Filter>资源文件\IMAGES</Filter>
+    </Image>
+    <Image Include="resources\open.jpg">
+      <Filter>资源文件\IMAGES</Filter>
+    </Image>
+    <Image Include="resources\options.jpg">
+      <Filter>资源文件\IMAGES</Filter>
+    </Image>
+    <Image Include="resources\opts.jpg">
+      <Filter>资源文件\IMAGES</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Lab.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

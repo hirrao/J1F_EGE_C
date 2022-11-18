@@ -1,9 +1,10 @@
 #include"head.h"
-int main(void)
+int main()
 {
-	setcaption("»­Í¼");
-	initgraph(1920, 1080);
-	read();
-	option();
+	initgraph(1536, 864, INIT_NOBORDER | INIT_RENDERMANUAL);
+	PIMAGE neww = newimage();
+	while (!opens());
+	options();
+	getch();
 	return 0;
 }
