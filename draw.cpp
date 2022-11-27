@@ -1,97 +1,117 @@
 #include"head.h"
-void drawcircle()
+mouse_msg StartDraw(mouse_msg mouse)
 {
-    char str[20] = {};
-    int strint = 0;
-    int data[3];
-    inputbox_getline("画圆", "请输入X，Y，半径", str, 20);
-    data[0] = atoi(strtok(str, " "));
-    for (int i = 0;i < 2;i++)
-    {
-        if (strtok(NULL, str) != NULL)
-            data[i + 1] = atoi(strtok(NULL, " "));
-        else
-        {
-            inputbox_getline("控制面板", "输入有误！\n请按任意键回到控制面板", str, 2);
-            return;
-        }
-    }
-    if ((data[0] - data[2]) < 0 || (data[0] + data[2]) > 1920 || (data[1] - data[2]) < 0 || (data[1] + data[2]) > 1080 || data[2] < 0)
-    {
-        inputbox_getline("控制面板", "输入超过了屏幕边界！\n请按任意键回到控制面板", str, 2);
-        return;
-    }
-    circle(data[0], data[1], data[2]);
-    getch();
-    return;
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		PIMAGE NowOption = newimage();
+		getimage(NowOption, 0, 0, 1536, 200);
+		mouse_msg m = getmouse();
+		if (m.y < 2 * BlockY)
+			return m;
+		if (m.is_left()&&m.is_down())
+		{
+			switch (Modes)
+			{
+			case MOUSE:
+				break;
+			case PIXEL:
+				Draw_Pixel(m);
+				break;
+			case LINE:
+				Draw_Line(m);
+				break;
+			case CIRCLE:
+				Draw_Circle(m);
+				break;
+			}
+			putimage(0, 0, NowOption);
+		}
+		delimage(NowOption);
+	}
 }
 
-void drawrec()
+void ClearDevice()
 {
-    char str[20] = {};
-    int strint = 0;
-    int data[4];
-    inputbox_getline("画圆", "请输入X1，Y1，X1，Y2", str, 20);
-    data[0] = atoi(strtok(str, " "));
-    for (int i = 0;i < 3;i++)
-        data[i + 1] = atoi(strtok(NULL, " "));
-    if (data[0] < 0 || data[1]>1920 || data[2] < 0 || data[3]>1080)
-    {
-        inputbox_getline("控制面板", "输入超过了屏幕边界！\n请按任意键回到控制面板", str, 2);
-        return;
-    }
-    rectangle(data[0], data[1], data[2], data[3]);
-    getch();
-    return;
+	color_t NowColor = getfillcolor();
+	setfillcolor(WHITE);
+	bar(0, 200, 1600, 900);
+	setfillcolor(NowColor);
+	return;
 }
 
-void choosecolor()
+/*void Draw_Pixel(mouse_msg mouse)
 {
-    char str[20] = {};
-    int strint = 0;
-    inputbox_getline("更改颜色", "请选择需要更改的颜色\n1.红色    2.蓝色\n3.黄色    4.绿色\n5.自定义颜色    6.恢复为默认颜色（白色）\n7.退出", str, 2);
-    strint = atoi(str);
-    switch (strint)
-    {
-    case 1:
-        setcolor(RED);
-        inputbox_getline("更改颜色", "已更改颜色为红色\n请按任意键回到控制面板", str, 2);
-        return;
-    case 2:
-        setcolor(BLUE);
-        inputbox_getline("更改颜色", "已更改颜色为蓝色\n请按任意键回到控制面板", str, 2);
-        return;
-    case 3:
-        setcolor(YELLOW);
-        inputbox_getline("更改颜色", "已更改颜色为黄色\n请按任意键回到控制面板", str, 2);
-        return;
-    case 4:
-        setcolor(GREEN);
-        inputbox_getline("更改颜色", "已更改颜色为绿色\n请按任意键回到控制面板", str, 2);
-        return;
-    case 5:
+	ege_fillellipse(mouse.x - (width / 2.0), mouse.y - (width / 2.0), width, width);
+	Draw_Undo_Init();
+	Draw_Redo_Init(1, mouse);
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		mouse_msg m = getmouse();
+		ege_fillellipse(m.x - (width / 2.0), m.y - (width / 2.0), width, width);
+		Draw_Undo_Init();
+		Draw_Redo_Init(1, m);
+		if (m.is_up())
+			return;
+	}
+}*/
 
-        int data[3];
-        inputbox_getline("更改颜色", "请以R，G，B的顺序输入RGB值,色深为8bit", str, 20);
-        data[0] = atoi(strtok(str, " "));
-        for (int i = 0;i < 2;i++)
-            data[i + 1] = atoi(strtok(NULL, " "));
-        if (data[0] < 0 || data[0]>255 || data[1] < 0 || data[1]>255 || data[2] < 0 || data[2]>255)
-        {
-            inputbox_getline("控制面板", "输入越界！\n请按任意键回到控制面板", str, 2);
-            return;
-        }
-        setcolor(EGERGB(data[0], data[1], data[2]));
-        inputbox_getline("更改颜色", "已更改颜色为自定义颜色\n请按任意键回到控制面板", str, 2);
-        return;
-    case 6:
-        setcolor(WHITE);
-        inputbox_getline("更改颜色", "已重置颜色为白色\n请按任意键回到控制面板", str, 2);
-        return;
-    case 7:
-        return;
-    default:
-        inputbox_getline("控制面板", "无效的输入\n请回车后回到控制面板", str, 2);
-    }
-    return;
+void Draw_Pixel(mouse_msg mouse)
+{
+	coordinate coor[10000];
+	coor[0].x = mouse.x;
+	coor[0].y = mouse.y;
+	flushmouse();
+	for (int n = 1;is_run();delay_fps(300))
+	{
+		mouse_msg m = getmouse();
+		coor[n].x = m.x;
+		coor[n].y = m.y;
+		ege_line(coor[n - 1].x, coor[n - 1].y, coor[n].x, coor[n].y);
+		n++;
+		if (m.is_up())
+			return;
+	}
+}
+
+void Draw_Line(mouse_msg mouse)
+{
+	PIMAGE NowImage = newimage();
+	getimage(NowImage, 0, 0, 1536, 864);
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		mouse_msg m = getmouse();
+		putimage(0, 0, NowImage);
+		ege_line(mouse.x, mouse.y, m.x, m.y);
+		if (m.is_left() && m.is_down())
+		{
+			Draw_Undo_Init();
+			Draw_Redo_Init(2, mouse, m);
+			delimage(NowImage);
+			return;
+		}
+	}
+}
+
+void Draw_Circle(mouse_msg mouse)
+{
+	PIMAGE NowImage = newimage();
+	getimage(NowImage, 0, 0, 1536, 864);
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		mouse_msg m = getmouse();
+		putimage(0, 0, NowImage);
+		int r = sqrt(pow((m.x - mouse.x), 2) + pow((m.y - mouse.y), 2));
+		ege_ellipse(mouse.x - r, mouse.y - r, 2 * r, 2 * r);
+		if (m.is_left() && m.is_down())
+		{
+			Draw_Undo_Init();
+			Draw_Redo_Init(2, mouse, m);
+			delimage(NowImage);
+			return;
+		}
+	}
 }
