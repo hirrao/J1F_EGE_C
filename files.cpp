@@ -1,4 +1,4 @@
-#include"head.h"
+ï»¿#include"head.h"
 PIMAGE Read = nullptr;
 bool FunOpen()
 {
@@ -23,7 +23,7 @@ bool FunOpen()
 						TCHAR FileName[MAX_PATH] = { 0 };
 						OPENFILENAME ofn = { 0 };
 						ofn.lStructSize = sizeof(ofn);
-						ofn.lpstrFilter = _T("Í¼ÏñÎÄ¼ş(*.draw)\0*.draw\0\0");
+						ofn.lpstrFilter = _T("å›¾åƒæ–‡ä»¶(*.draw)\0*.draw\0\0");
 						ofn.lpstrInitialDir = _T(".\\Images\\");
 						ofn.lpstrFile = FileName;
 						ofn.nMaxFile = sizeof(FileName) / sizeof(*FileName);
@@ -37,7 +37,7 @@ bool FunOpen()
 						ReadOk = getimage(Read, FileName);
 						if (ReadOk != 0)
 						{
-							inputbox_getline("¿ØÖÆÃæ°å", "¶ÁÈ¡Ê§°Ü£¡£¡\nÇëÊäÈëÈÎÒâ¼ü·µ»Ø¿ªÊ¼½çÃæ", str, 2);
+							inputbox_getline("æ§åˆ¶é¢æ¿", "è¯»å–å¤±è´¥ï¼ï¼\nè¯·è¾“å…¥ä»»æ„é”®è¿”å›å¼€å§‹ç•Œé¢", str, 2);
 							return false;
 						}
 						return true;
@@ -55,7 +55,7 @@ bool FunOpen()
 				}
 			}
 	}
-	return false;//Î´Öª´íÎóÊ±·µ»Ø
+	return false;//æœªçŸ¥é”™è¯¯æ—¶è¿”å›
 }
 
 void SaveFile()
@@ -65,7 +65,7 @@ void SaveFile()
 	TCHAR filename[MAX_PATH] = _T("image.draw");
 	OPENFILENAME ofn = { 0 };
 	ofn.lStructSize = sizeof(ofn);
-	ofn.lpstrFilter = _T("Í¼ÏñÎÄ¼ş(*.draw)\0*.draw\0\0");
+	ofn.lpstrFilter = _T("å›¾åƒæ–‡ä»¶(*.draw)\0*.draw\0\0");
 	ofn.lpstrInitialDir = _T(".\\Images\\");
 	ofn.lpstrFile = filename;
 	ofn.nMaxFile = sizeof(filename) / sizeof(*filename);

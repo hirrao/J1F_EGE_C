@@ -1,4 +1,4 @@
-#include"head.h"
+﻿#include"head.h"
 mouse_msg StartDraw(mouse_msg mouse)
 {
 	flushmouse();
@@ -40,38 +40,29 @@ void ClearDevice()
 	return;
 }
 
-/*void Draw_Pixel(mouse_msg mouse)
-{
-	ege_fillellipse(mouse.x - (width / 2.0), mouse.y - (width / 2.0), width, width);
-	Draw_Undo_Init();
-	Draw_Redo_Init(1, mouse);
-	flushmouse();
-	for (;is_run();delay_fps(FPS))
-	{
-		mouse_msg m = getmouse();
-		ege_fillellipse(m.x - (width / 2.0), m.y - (width / 2.0), width, width);
-		Draw_Undo_Init();
-		Draw_Redo_Init(1, m);
-		if (m.is_up())
-			return;
-	}
-}*/
-
 void Draw_Pixel(mouse_msg mouse)
 {
-	coordinate coor[10000];
-	coor[0].x = mouse.x;
-	coor[0].y = mouse.y;
+	RMake[Save].pixel_ = (coordinate*)malloc(MAX * sizeof(coordinate));
+	if (RMake[Save].pixel_ == nullptr)
+	{
+		return;
+	}
+	coordinate* coors = RMake[Save].pixel_;
 	flushmouse();
+	coors[0].x = mouse.x;
+	coors[0].y = mouse.y;
 	for (int n = 1;is_run();delay_fps(300))
 	{
 		mouse_msg m = getmouse();
-		coor[n].x = m.x;
-		coor[n].y = m.y;
-		ege_line(coor[n - 1].x, coor[n - 1].y, coor[n].x, coor[n].y);
+		coors[n].x = m.x;
+		coors[n].y = m.y;
+		ege_line(float(coors[n - 1].x), float(coors[n - 1].y), float(coors[n].x), float(coors[n].y));
 		n++;
 		if (m.is_up())
+		{
+			Draw_Undo_Init();
 			return;
+		}
 	}
 }
 
@@ -84,7 +75,7 @@ void Draw_Line(mouse_msg mouse)
 	{
 		mouse_msg m = getmouse();
 		putimage(0, 0, NowImage);
-		ege_line(mouse.x, mouse.y, m.x, m.y);
+		ege_line(float(mouse.x), float(mouse.y), float(m.x), float(m.y));
 		if (m.is_left() && m.is_down())
 		{
 			Draw_Undo_Init();
@@ -104,7 +95,7 @@ void Draw_Circle(mouse_msg mouse)
 	{
 		mouse_msg m = getmouse();
 		putimage(0, 0, NowImage);
-		int r = sqrt(pow((m.x - mouse.x), 2) + pow((m.y - mouse.y), 2));
+		float r = sqrt(pow(double(m.x - mouse.x), 2) + pow(double((m.y - mouse.y)), 2));
 		ege_ellipse(mouse.x - r, mouse.y - r, 2 * r, 2 * r);
 		if (m.is_left() && m.is_down())
 		{

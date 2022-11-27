@@ -1,4 +1,4 @@
-#include"head.h"
+﻿#include"head.h"
 void Draw_Undo_Init()
 {
 	Save += 1;
@@ -69,7 +69,6 @@ void Redo(int Num)
 		Save += 1;
 		break;
 	case PIXEL:
-		ege_fillellipse(NowIM.coor[0].x - (width / 2), NowIM.coor[0].y - (width / 2), width, width);
 		Save += 1;
 		break;
 	case LINE:
@@ -77,7 +76,7 @@ void Redo(int Num)
 		Save += 1;
 		break;
 	case CIRCLE:
-		int r = sqrt(pow((NowIM.coor[1].x - NowIM.coor[0].x), 2) + pow((NowIM.coor[1].y - NowIM.coor[0].y), 2));
+		int r = sqrt(pow(double(NowIM.coor[1].x - NowIM.coor[0].x), 2) + pow(double(NowIM.coor[1].y - NowIM.coor[0].y), 2));
 		ege_ellipse(NowIM.coor[0].x - r, NowIM.coor[0].y - r, 2 * r, 2 * r);
 		Save += 1;
 		break;

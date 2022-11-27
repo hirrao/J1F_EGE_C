@@ -1,4 +1,4 @@
-#include "head.h"
+ï»¿#include "head.h"
 int Modes = -1;
 bool Line_Mode = 0;
 int Save = 0;
@@ -22,7 +22,7 @@ int main()
 	getimage(Option, TEXT("JPG"), MAKEINTRESOURCE(IMAGEOPTION));
 	putimage(0, 0, Option);
 	delimage(Option);
-	/*³õÊ¼»¯¸÷¸öÍ¼±êÓëÈ«¾Ö±äÁ¿*/
+	/*åˆå§‹åŒ–å„ä¸ªå›¾æ ‡ä¸å…¨å±€å˜é‡*/
 	PIMAGE NewOption = newimage();
 	getimage(NewOption, TEXT("JPG"), MAKEINTRESOURCE(NEWOPTION));
 	PIMAGE Draw_Line = newimage();
@@ -66,7 +66,7 @@ int main()
 					if (m.x < (4 * BlockOption))
 					{
 						char buf[4] = {};
-						inputbox_getline("ÉèÖÃÏß¿í", "ÇëÊäÈëÏß¿í", buf, 4);
+						inputbox_getline("è®¾ç½®çº¿å®½", "è¯·è¾“å…¥çº¿å®½", buf, 4);
 						width = atoi(buf);
 						setlinewidth(width);
 					}
@@ -141,7 +141,7 @@ int main()
 								if (m.is_right())
 								{
 									char inputs[3] = {};
-									inputbox_getline("¶à±ßĞÎ±ßÊıÑ¡Ôñ", "ÇëÊäÈë¶à±ßĞÎ±ßÊı", inputs, 2);
+									inputbox_getline("å¤šè¾¹å½¢è¾¹æ•°é€‰æ‹©", "è¯·è¾“å…¥å¤šè¾¹å½¢è¾¹æ•°", inputs, 2);
 									Modes += atoi(inputs);
 								}
 								//putimage(BlockDrawStart, BlockY, Draw_Polygon);

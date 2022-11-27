@@ -1,6 +1,6 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ ���ɵİ����ļ���
-// �� Lab.rc ʹ��
+﻿//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ 生成的包含文件。
+// 供 Lab.rc 使用
 //
 #define IMAGEOPEN                       101
 #define IMAGEOPTION                     102

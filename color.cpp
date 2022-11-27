@@ -1,4 +1,4 @@
-#include"head.h"
+ï»¿#include"head.h"
 void SetColor(mouse_msg mouse)
 {
 	if (mouse.x < BlockColorEnd && mouse.is_left())
@@ -36,17 +36,17 @@ void SetColor(mouse_msg mouse)
 				blocksy = 2;
 		}
 		char buf[12];
-		inputbox_getline("ÑÕÉ«Ñ¡Ôñ", "ÇëÊäÈëÏëÒªÉèÖÃµÄR£¬G£¬BÖµ(Êı×ÖÖ®¼äÒÔ¿Õ¸ñ¸ô¿ª£©", buf, 12);
+		inputbox_getline("é¢œè‰²é€‰æ‹©", "è¯·è¾“å…¥æƒ³è¦è®¾ç½®çš„Rï¼ŒGï¼ŒBå€¼(æ•°å­—ä¹‹é—´ä»¥ç©ºæ ¼éš”å¼€ï¼‰", buf, 12);
 		int data[3] = {};
 		int OK = sscanf(buf, "%d %d %d", &data[0], &data[1], &data[2]);
 		if (OK < 3)
 		{
-			inputbox_getline("¿ØÖÆÃæ°å", "ÊäÈëÊıÁ¿Ì«ÉÙ£¡\nÇë°´ÈÎÒâ¼ü»Øµ½»­Í¼½çÃæ", buf, 2);
+			inputbox_getline("æ§åˆ¶é¢æ¿", "è¾“å…¥æ•°é‡å¤ªå°‘ï¼\nè¯·æŒ‰ä»»æ„é”®å›åˆ°ç”»å›¾ç•Œé¢", buf, 2);
 			return;
 		}
 		if (data[0] > 255 || data[1] > 255 || data[2] > 255)
 		{
-			inputbox_getline("¿ØÖÆÃæ°å", "ÊäÈëÔ½½ç£¡\nÇë°´ÈÎÒâ¼ü»Øµ½»­Í¼½çÃæ", buf, 2);
+			inputbox_getline("æ§åˆ¶é¢æ¿", "è¾“å…¥è¶Šç•Œï¼\nè¯·æŒ‰ä»»æ„é”®å›åˆ°ç”»å›¾ç•Œé¢", buf, 2);
 			return;
 		}
 		else
