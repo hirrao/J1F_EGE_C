@@ -6,7 +6,7 @@ void Draw_Undo_Init()
 	{
 		Draw_Modes New;
 		New.Mode = -1;
-		for (int a = Save;a <= MAX_PATH;++a)
+		for (int a = Save;a <= MAX;++a)
 			RMake[a - 1] = New;
 		Undo_Or_Not = false;
 	}
