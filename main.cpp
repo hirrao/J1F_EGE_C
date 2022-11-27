@@ -2,7 +2,7 @@
 int Modes = -1;
 bool Line_Mode = 0;
 int Save = 0;
-int width = 1;
+double width = 1;
 extern Draw_Modes* RMake = (Draw_Modes*)malloc(MAX * sizeof(Draw_Modes));
 bool Undo_Or_Not = false;
 int main()
@@ -67,8 +67,8 @@ int main()
 					{
 						char buf[4] = {};
 						inputbox_getline("设置线宽", "请输入线宽", buf, 4);
-						width = atoi(buf);
-						setlinewidth(width);
+						width = atof(buf);
+						setlinewidth(float(width));
 					}
 				}
 				else

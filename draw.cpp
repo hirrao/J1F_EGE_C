@@ -95,7 +95,7 @@ void Draw_Circle(mouse_msg mouse)
 	{
 		mouse_msg m = getmouse();
 		putimage(0, 0, NowImage);
-		float r = sqrt(pow(double(m.x - mouse.x), 2) + pow(double((m.y - mouse.y)), 2));
+		float r = float(sqrt(pow(double(m.x - mouse.x), 2) + pow(double((m.y - mouse.y)), 2)));
 		ege_ellipse(mouse.x - r, mouse.y - r, 2 * r, 2 * r);
 		if (m.is_left() && m.is_down())
 		{

@@ -13,7 +13,7 @@
 extern int Modes;															//当前绘图模式
 extern int Save;															//当前存储的图形数量
 extern bool Undo_Or_Not;													//是否在撤销后又重新绘图
-extern int width;															//当前线宽
+extern double width;														//当前线宽
 /*区块长宽枚举*/
 enum BLOCKS
 {
@@ -46,7 +46,7 @@ typedef struct Draw_Modes
 	coordinate coor[20] = {};                       //记录坐标
 	int Mode = Modes;								//记录绘图方式
 	color_t Color = WHITE;							//记录颜色
-	int Width = width;								//记录线条宽度
+	double Width = width;							//记录线条宽度
 	coordinate* pixel_ = nullptr;					//仅限铅笔模式，保留这一次铅笔模式绘画的完整信息
 }Draw_Modes;
 extern Draw_Modes* RMake;													//完整绘图信息的保存

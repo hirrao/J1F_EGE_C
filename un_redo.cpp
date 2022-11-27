@@ -61,7 +61,7 @@ void Redo(int Num)
 		Save -= 1;
 	}
 	setcolor(NowIM.Color);
-	setlinewidth(NowIM.Width);
+	setlinewidth(float(NowIM.Width));
 	switch (NowIM.Mode)
 	{
 	case CLEAR:
@@ -72,11 +72,11 @@ void Redo(int Num)
 		Save += 1;
 		break;
 	case LINE:
-		ege_line(NowIM.coor[0].x, NowIM.coor[0].y, NowIM.coor[1].x, NowIM.coor[1].y);
+		ege_line(float(NowIM.coor[0].x), float(NowIM.coor[0].y), float(NowIM.coor[1].x), float(NowIM.coor[1].y));
 		Save += 1;
 		break;
 	case CIRCLE:
-		int r = sqrt(pow(double(NowIM.coor[1].x - NowIM.coor[0].x), 2) + pow(double(NowIM.coor[1].y - NowIM.coor[0].y), 2));
+		float r = float(sqrt(pow(double(NowIM.coor[1].x - NowIM.coor[0].x), 2) + pow(double(NowIM.coor[1].y - NowIM.coor[0].y), 2)));
 		ege_ellipse(NowIM.coor[0].x - r, NowIM.coor[0].y - r, 2 * r, 2 * r);
 		Save += 1;
 		break;
@@ -84,5 +84,5 @@ void Redo(int Num)
 	putimage(0, 0, NowOption);
 	delimage(NowOption);
 	setcolor(NowColor);
-	setlinewidth(width);
+	setlinewidth(float(width));
 }
