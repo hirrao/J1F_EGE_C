@@ -9,11 +9,12 @@
 #include<stdio.h>
 /*各种常量和枚举的声明，遗迹结构体的定义*/
 #define FPS 360																//绘图刷新率（因未知原因，低于此数在绘图时有着明显的延迟）
-#define MAX 1000															//程序能存储的最大数量的操作
+#define MAX 10000															//程序能存储的最大数量的操作
 extern int Modes;															//当前绘图模式
 extern int Save;															//当前存储的图形数量
 extern bool Undo_Or_Not;													//是否在撤销后又重新绘图
 extern double width;														//当前线宽
+extern int N[MAX];
 /*区块长宽枚举*/
 enum BLOCKS
 {

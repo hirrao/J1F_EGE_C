@@ -143,6 +143,15 @@
   <ItemGroup>
     <Text Include="readme.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\Draw_Circle.jpg" />
+    <Image Include="resources\Draw_Line.jpg" />
+    <Image Include="resources\Help.jpg" />
+    <Image Include="resources\NewOption.jpg" />
+    <Image Include="resources\Open.jpg" />
+    <Image Include="resources\Option.jpg" />
+    <Image Include="resources\Pixel.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

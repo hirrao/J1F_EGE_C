@@ -69,6 +69,12 @@ void Redo(int Num)
 		Save += 1;
 		break;
 	case PIXEL:
+		for (int n = 1;n < N[N[0]];++n)
+		{
+			coordinate* coors = NowIM.pixel_;
+			ege_line(float(coors[n - 1].x), float(coors[n - 1].y), float(coors[n].x), float(coors[n].y));
+		}
+		N[0]--;
 		Save += 1;
 		break;
 	case LINE:

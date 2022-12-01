@@ -44,4 +44,30 @@
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\Open.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Option.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\NewOption.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Draw_Circle.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Draw_Line.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Help.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Pixel.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

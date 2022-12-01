@@ -3,6 +3,7 @@ int Modes = -1;
 bool Line_Mode = 0;
 int Save = 0;
 double width = 1;
+int N[MAX] = {};
 extern Draw_Modes* RMake = (Draw_Modes*)malloc(MAX * sizeof(Draw_Modes));
 bool Undo_Or_Not = false;
 int main()
@@ -29,6 +30,8 @@ int main()
 	getimage(Draw_Line, TEXT("JPG"), MAKEINTRESOURCE(DRAW_LINE));
 	PIMAGE Draw_Circle = newimage();
 	getimage(Draw_Circle, TEXT("JPG"), MAKEINTRESOURCE(DRAW_CIRCLE));
+	PIMAGE Draw_Pixel = newimage();
+	getimage(Draw_Pixel, TEXT("JPG"), MAKEINTRESOURCE(DRAW_PIXEL));
 	if (Read != nullptr)
 		putimage(0, 2 * BlockY, Read);
 	PIMAGE StartImage = newimage();
@@ -114,6 +117,8 @@ int main()
 						if (m.x < (BlockDrawStart + BlockDraw))
 						{
 							Modes = PIXEL;
+							putimage(BlockDrawStart, 0, NewOption);
+							putimage(BlockDrawStart, 0, Draw_Pixel);
 							continue;
 						}
 						if (m.x < (BlockDrawStart + 2 * BlockDraw))

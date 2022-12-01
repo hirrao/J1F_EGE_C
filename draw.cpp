@@ -48,9 +48,10 @@ void Draw_Pixel(mouse_msg mouse)
 		return;
 	}
 	coordinate* coors = RMake[Save].pixel_;
-	flushmouse();
 	coors[0].x = mouse.x;
 	coors[0].y = mouse.y;
+	N[0]++;
+	flushmouse();
 	for (int n = 1;is_run();delay_fps(300))
 	{
 		mouse_msg m = getmouse();
@@ -60,6 +61,9 @@ void Draw_Pixel(mouse_msg mouse)
 		n++;
 		if (m.is_up())
 		{
+			RMake[Save].Mode = PIXEL;
+			RMake[Save].Color = getcolor();
+			N[N[0]] = n;
 			Draw_Undo_Init();
 			return;
 		}
