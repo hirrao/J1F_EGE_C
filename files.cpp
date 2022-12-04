@@ -13,8 +13,10 @@ bool FunOpen()
 			mouse_msg m = getmouse();
 			if (m.is_left())
 			{
+				/*若点击退出，则直接退出*/
 				if (m.x > 500 && m.x < 1050 && m.y>680 && m.y < 780)
 					exit(1);
+				/*读取文件部分（暂时以PNG格式保存与读取文件）*/
 				else if (m.x > 500 && m.x < 1050 && m.y>280 && m.y < 380)
 				{
 					char str[2];
@@ -43,12 +45,14 @@ bool FunOpen()
 						return true;
 					}
 				}
+				/*不读取文件*/
 				else if (m.x > 500 && m.x < 1050 && m.y>480 && m.y < 580)
 				{
 					delimage(Read);
 					Read = nullptr;
 					return true;
 				}
+				/*进入帮助部分*/
 				else if (m.x > 100 && m.x < 200 && m.y>300 && m.y < 700)
 				{
 					Help();
@@ -59,6 +63,7 @@ bool FunOpen()
 	return false;//未知错误时返回
 }
 
+/*将文件保存为PNG格式（后缀为DRAW）*/
 void SaveFile()
 {
 	PIMAGE SaveImage = newimage();
@@ -80,6 +85,7 @@ void SaveFile()
 	return;
 }
 
+/*调出帮助文档*/
 void Help()
 {
 	PIMAGE HelpFirst = newimage();

@@ -44,11 +44,11 @@ typedef struct coordinate
 /*记录本次操作的全部具体信息*/
 typedef struct Draw_Modes
 {
-	coordinate coor[20] = {};                       //记录坐标
-	int Mode = Modes;								//记录绘图方式
-	color_t Color = WHITE;							//记录颜色
-	double Width = width;							//记录线条宽度
-	coordinate* pixel_ = nullptr;					//仅限铅笔模式，保留这一次铅笔模式绘画的完整信息
+	coordinate coor[20] = {};												//记录坐标
+	int Mode = Modes;														//记录绘图方式
+	color_t Color = WHITE;													//记录颜色
+	double Width = width;													//记录线条宽度
+	coordinate* pixel_ = nullptr;											//仅限铅笔模式，保留这一次铅笔模式绘画的完整信息
 }Draw_Modes;
 extern Draw_Modes* RMake;													//完整绘图信息的保存
 extern PIMAGE Read;															//指向以读取的图像的指针（暂时以图片形式执行）

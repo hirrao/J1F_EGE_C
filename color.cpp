@@ -3,6 +3,7 @@ void SetColor(mouse_msg mouse)
 {
 	if (mouse.x < BlockColorEnd && mouse.is_left())
 	{
+		/*设置颜色，直接设置为鼠标点击处的颜色*/
 		if (mouse.y != 100 && mouse.y != 99)
 		{
 			for (int n = 0;n < 9;++n)
@@ -15,6 +16,7 @@ void SetColor(mouse_msg mouse)
 			return;
 		}
 	}
+	/*对四个预设框尽心颜色修改*/
 	else if (mouse.is_right())
 	{
 		int blocksx = 0;

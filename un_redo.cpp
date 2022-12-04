@@ -1,6 +1,7 @@
 ﻿#include"head.h"
 void Draw_Undo_Init()
 {
+	/*判断在绘图前是否进行了撤销操作，若是，则清除撤销前在撤销操作后的操作*/
 	Save += 1;
 	if (Undo_Or_Not == true)
 	{
@@ -24,6 +25,7 @@ void Undo()
 	if (Read != nullptr)
 		putimage(0, 200, Read);
 	Save -= 1;
+	/*重绘所有图形以达到撤销目的*/
 	for (int a = 0;a < Save;++a)
 		Redo(a);
 	return;
@@ -32,6 +34,7 @@ void Undo()
 
 void Draw_Redo_Init(int Num, ...)
 {
+	/*将绘图信息进行保存，以便进行撤销重做*/
 	va_list New = nullptr;
 	va_start(New, Num);
 	RMake[Save - 1].Color = getcolor();
@@ -49,6 +52,7 @@ void Draw_Redo_Init(int Num, ...)
 
 void Redo(int Num)
 {
+	/*重做部分，即为绘制传入的图形（可能为重做，也可能为撤销部分）*/
 	color_t NowColor = getcolor();
 	PIMAGE NowOption = newimage();
 	getimage(NowOption, 0, 0, 1536, 200);

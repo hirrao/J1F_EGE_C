@@ -38,6 +38,7 @@ int main()
 	for (;is_run();delay_fps(FPS))
 	{
 		mouse_msg m = getmouse();
+		/*若鼠标在绘图区域，则进入绘图模式*/
 		if (m.y > (2 * BlockY))
 		{
 			m = StartDraw(m);
@@ -59,6 +60,7 @@ int main()
 					}
 					if (m.x < (3 * BlockOption))
 					{
+						/*清屏，并将清屏信息进行保存*/
 						ClearDevice();
 						Draw_Undo_Init();
 						Draw_Redo_Init(0);
@@ -67,6 +69,7 @@ int main()
 					}
 					if (m.x < (4 * BlockOption))
 					{
+						/*设置当前绘图线宽*/
 						char buf[4] = {};
 						inputbox_getline("设置线宽", "请输入线宽", buf, 4);
 						width = atof(buf);
@@ -95,12 +98,19 @@ int main()
 						flushmouse();
 						for (;is_run();delay_fps(FPS))
 						{
+							/*选取绘图区域的图形并保存*/
 							mouse_msg mou = getmouse();
 							if (mou.is_left() && mou.is_down())
 							{
-								setcolor(EGEACOLOR(0XFF, getpixel(mou.x, mou.y)));
-								setfillcolor(EGEACOLOR(0XFF, getpixel(mou.x, mou.y)));
-								break;
+								/*若为绘图区域，则保存颜色并设置，否则直接退出*/
+								if (mou.y > 200)
+								{
+									setcolor(EGEACOLOR(0XFF, getpixel(mou.x, mou.y)));
+									setfillcolor(EGEACOLOR(0XFF, getpixel(mou.x, mou.y)));
+									break;
+								}
+								else
+									break;
 							}
 						}
 						continue;
@@ -147,6 +157,7 @@ int main()
 			}
 			else if (m.is_down())
 			{
+				/*进入颜色设置模式*/
 				SetColor(m);
 				continue;
 			}
