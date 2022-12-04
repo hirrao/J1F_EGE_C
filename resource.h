@@ -7,7 +7,7 @@
 #define NEWOPTION                       103
 #define DRAW_CIRCLE                     104
 #define DRAW_LINE                       105
-#define HELPS                           106
+#define HELPFIRST                       106
 #define DRAW_PIXEL                      107
 
 // Next default values for new objects

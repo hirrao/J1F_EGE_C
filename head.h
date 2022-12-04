@@ -54,8 +54,9 @@ extern Draw_Modes* RMake;													//完整绘图信息的保存
 extern PIMAGE Read;															//指向以读取的图像的指针（暂时以图片形式执行）
 /*以下是各种函数的声明*/
 mouse_msg StartDraw(mouse_msg mouse);
-void Undo();
-void Redo(int Num = -1);
+void Undo();																//撤销部分
+void Redo(int Num = -1);													//重做部分（同时也用来进行撤销后的全部重绘）
+void Help();																//调出帮助图像
 void Draw_Line(mouse_msg mouse);											//画线函数
 void Draw_Pixel(mouse_msg mouse);											//铅笔模式
 void Draw_Circle(mouse_msg mouse);											//画圆

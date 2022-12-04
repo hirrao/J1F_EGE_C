@@ -146,7 +146,9 @@
   <ItemGroup>
     <Image Include="resources\Draw_Circle.jpg" />
     <Image Include="resources\Draw_Line.jpg" />
+    <Image Include="resources\Draw_Pixel.jpg" />
     <Image Include="resources\Help.jpg" />
+    <Image Include="resources\HelpFirst.jpg" />
     <Image Include="resources\NewOption.jpg" />
     <Image Include="resources\Open.jpg" />
     <Image Include="resources\Option.jpg" />

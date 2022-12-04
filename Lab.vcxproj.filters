@@ -69,5 +69,11 @@
     <Image Include="resources\Pixel.jpg">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="resources\HelpFirst.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Draw_Pixel.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>

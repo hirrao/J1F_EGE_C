@@ -51,6 +51,7 @@ bool FunOpen()
 				}
 				else if (m.x > 100 && m.x < 200 && m.y>300 && m.y < 700)
 				{
+					Help();
 					return false;
 				}
 			}
@@ -77,4 +78,21 @@ void SaveFile()
 	saveimage(SaveImage, filename);
 	delimage(SaveImage);
 	return;
+}
+
+void Help()
+{
+	PIMAGE HelpFirst = newimage();
+	getimage(HelpFirst, TEXT("JPG"), MAKEINTRESOURCE(HELPFIRST));
+	putimage(0, 0, HelpFirst);
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		mouse_msg m = getmouse();
+		if (m.x > 10 && m.x < 160 && m.y>800 && m.y < 900&&m.is_down())
+		{
+			delimage(HelpFirst);
+			return;
+		}
+	}
 }
