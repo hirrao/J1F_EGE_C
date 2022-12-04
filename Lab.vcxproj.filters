@@ -15,7 +15,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="readme.txt" />
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="head.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Lab.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,16 +34,46 @@
     <ClCompile Include="files.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="draw.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="options.cpp">
+    <ClCompile Include="un_redo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="head.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\Open.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Option.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\NewOption.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Draw_Circle.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Draw_Line.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Help.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Pixel.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\HelpFirst.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resources\Draw_Pixel.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>

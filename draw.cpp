@@ -1,97 +1,203 @@
-#include"head.h"
-void drawcircle()
+ï»¿#include"head.h"
+mouse_msg StartDraw(mouse_msg mouse)
 {
-    char str[20] = {};
-    int strint = 0;
-    int data[3];
-    inputbox_getline("»­Ô²", "ÇëÊäÈëX£¬Y£¬°ë¾¶", str, 20);
-    data[0] = atoi(strtok(str, " "));
-    for (int i = 0;i < 2;i++)
-    {
-        if (strtok(NULL, str) != NULL)
-            data[i + 1] = atoi(strtok(NULL, " "));
-        else
-        {
-            inputbox_getline("¿ØÖÆÃæ°å", "ÊäÈëÓĞÎó£¡\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-            return;
-        }
-    }
-    if ((data[0] - data[2]) < 0 || (data[0] + data[2]) > 1920 || (data[1] - data[2]) < 0 || (data[1] + data[2]) > 1080 || data[2] < 0)
-    {
-        inputbox_getline("¿ØÖÆÃæ°å", "ÊäÈë³¬¹ıÁËÆÁÄ»±ß½ç£¡\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    }
-    circle(data[0], data[1], data[2]);
-    getch();
-    return;
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		PIMAGE NowOption = newimage();
+		getimage(NowOption, 0, 0, 1536, 200);
+		mouse_msg m = getmouse();
+		/*å½“é¼ æ ‡é€€å‡ºç»˜å›¾åŒºåŸŸï¼Œç›´æ¥é€€å‡ºç»˜å›¾å‡½æ•°ï¼Œä»¥é™ä½å»¶è¿Ÿ*/
+		if (m.y < 2 * BlockY)
+			return m;
+		if (m.is_left()&&m.is_down())
+		{
+			/*è¿›è¡Œå½“å‰ç»˜ç”»æ¨¡å¼çš„é€‰å–ï¼Œå¹¶è°ƒç”¨å¯¹åº”å‡½æ•°*/
+			switch (Modes)
+			{
+			case MOUSE:
+				break;
+			case PIXEL:
+				Draw_Pixel(m);
+				break;
+			case LINE:
+				Draw_Line(m);
+				break;
+			case CIRCLE:
+				Draw_Circle(m);
+				break;
+			}
+			putimage(0, 0, NowOption);
+		}
+		delimage(NowOption);
+	}
 }
 
-void drawrec()
+void ClearDevice()
 {
-    char str[20] = {};
-    int strint = 0;
-    int data[4];
-    inputbox_getline("»­Ô²", "ÇëÊäÈëX1£¬Y1£¬X1£¬Y2", str, 20);
-    data[0] = atoi(strtok(str, " "));
-    for (int i = 0;i < 3;i++)
-        data[i + 1] = atoi(strtok(NULL, " "));
-    if (data[0] < 0 || data[1]>1920 || data[2] < 0 || data[3]>1080)
-    {
-        inputbox_getline("¿ØÖÆÃæ°å", "ÊäÈë³¬¹ıÁËÆÁÄ»±ß½ç£¡\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    }
-    rectangle(data[0], data[1], data[2], data[3]);
-    getch();
-    return;
+	/*å®ç°æ–¹å¼ä¸ºç”¨ç™½è‰²è¦†ç›–ç»˜å›¾åŒºåŸŸ*/
+	color_t NowColor = getfillcolor();
+	setfillcolor(WHITE);
+	bar(0, 200, 1600, 900);
+	setfillcolor(NowColor);
+	return;
 }
 
-void choosecolor()
+void Draw_Pixel(mouse_msg mouse)
 {
-    char str[20] = {};
-    int strint = 0;
-    inputbox_getline("¸ü¸ÄÑÕÉ«", "ÇëÑ¡ÔñĞèÒª¸ü¸ÄµÄÑÕÉ«\n1.ºìÉ«    2.À¶É«\n3.»ÆÉ«    4.ÂÌÉ«\n5.×Ô¶¨ÒåÑÕÉ«    6.»Ö¸´ÎªÄ¬ÈÏÑÕÉ«£¨°×É«£©\n7.ÍË³ö", str, 2);
-    strint = atoi(str);
-    switch (strint)
-    {
-    case 1:
-        setcolor(RED);
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÒÑ¸ü¸ÄÑÕÉ«ÎªºìÉ«\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    case 2:
-        setcolor(BLUE);
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÒÑ¸ü¸ÄÑÕÉ«ÎªÀ¶É«\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    case 3:
-        setcolor(YELLOW);
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÒÑ¸ü¸ÄÑÕÉ«Îª»ÆÉ«\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    case 4:
-        setcolor(GREEN);
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÒÑ¸ü¸ÄÑÕÉ«ÎªÂÌÉ«\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    case 5:
+	/*é“…ç¬”æ¨¡å¼ï¼Œåœ¨æœ€è¿‘ä¸¤ç‚¹é—´ç”»ä¸€æ¡çº¿ï¼Œç”±äºåˆ·æ–°ç‡å¾ˆå¿«ï¼Œè¾ƒéš¾çœ‹å‡ºæ¥åœ¨ç”»çº¿*/
+	Draw_Undo_Init();
+	/*åˆ†é…å †ç©ºé—´ï¼Œå°†è¯¥æ¨¡å¼ç»˜å›¾ä¿¡æ¯å­˜å‚¨äºå †ä¸­*/
+	RMake[Save-1].pixel_ = (coordinate*)malloc(MAX * sizeof(coordinate));
+	if (RMake[Save-1].pixel_ == nullptr)
+	{
+		return;
+	}
+	coordinate* coors = RMake[Save-1].pixel_;
+	coors[1].x = mouse.x;
+	coors[1].y = mouse.y;
+	flushmouse();
+	for (int n = 2;is_run();delay_fps(300))
+	{
+		mouse_msg m = getmouse();
+		coors[n].x = m.x;
+		coors[n].y = m.y;
+		ege_line(float(coors[n - 1].x), float(coors[n - 1].y), float(coors[n].x), float(coors[n].y));
+		n++;
+		if (m.is_up())
+		{
+			/*ç›¸å½“äºæ”¹å†™äº†ç»˜å›¾ä¿¡æ¯ä¿å­˜çš„åˆå§‹åŒ–å‡½æ•°*/
+			RMake[Save-1].Mode = PIXEL;
+			RMake[Save-1].Color = getcolor();
+			RMake[Save-1].Width = width;
+			coors[0].x = coors[0].y = n;
+			return;
+		}
+	}
+}
 
-        int data[3];
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÇëÒÔR£¬G£¬BµÄË³ĞòÊäÈëRGBÖµ,É«ÉîÎª8bit", str, 20);
-        data[0] = atoi(strtok(str, " "));
-        for (int i = 0;i < 2;i++)
-            data[i + 1] = atoi(strtok(NULL, " "));
-        if (data[0] < 0 || data[0]>255 || data[1] < 0 || data[1]>255 || data[2] < 0 || data[2]>255)
-        {
-            inputbox_getline("¿ØÖÆÃæ°å", "ÊäÈëÔ½½ç£¡\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-            return;
-        }
-        setcolor(EGERGB(data[0], data[1], data[2]));
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÒÑ¸ü¸ÄÑÕÉ«Îª×Ô¶¨ÒåÑÕÉ«\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    case 6:
-        setcolor(WHITE);
-        inputbox_getline("¸ü¸ÄÑÕÉ«", "ÒÑÖØÖÃÑÕÉ«Îª°×É«\nÇë°´ÈÎÒâ¼ü»Øµ½¿ØÖÆÃæ°å", str, 2);
-        return;
-    case 7:
-        return;
-    default:
-        inputbox_getline("¿ØÖÆÃæ°å", "ÎŞĞ§µÄÊäÈë\nÇë»Ø³µºó»Øµ½¿ØÖÆÃæ°å", str, 2);
-    }
-    return;
+/*ç”»çº¿æ¨¡å¼*/
+void Draw_Line(mouse_msg mouse)
+{
+	PIMAGE NowImage = newimage();
+	getimage(NowImage, 0, 0, 1536, 864);
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		mouse_msg m = getmouse();
+		putimage(0, 0, NowImage);
+		ege_line(float(mouse.x), float(mouse.y), float(m.x), float(m.y));
+		if (m.is_left() && m.is_down())
+		{
+			Draw_Undo_Init();
+			Draw_Redo_Init(2, mouse, m);
+			delimage(NowImage);
+			return;
+		}
+	}
+}
+
+/*ç”»åœ†æ¨¡å¼*/
+void Draw_Circle(mouse_msg mouse)
+{
+	PIMAGE NowImage = newimage();
+	getimage(NowImage, 0, 0, 1536, 864);
+	flushmouse();
+	for (;is_run();delay_fps(FPS))
+	{
+		mouse_msg m = getmouse();
+		putimage(0, 0, NowImage);
+		float r = float(sqrt(pow(double(m.x - mouse.x), 2) + pow(double((m.y - mouse.y)), 2)));
+		ege_ellipse(mouse.x - r, mouse.y - r, 2 * r, 2 * r);
+		if (m.is_left() && m.is_down())
+		{
+			Draw_Undo_Init();
+			Draw_Redo_Init(2, mouse, m);
+			delimage(NowImage);
+			return;
+		}
+	}
+}
+
+/*é”®ç›˜ç»˜åˆ¶å¤šè¾¹å½¢æ¨¡å¼*/
+void Draw_Homework_Polygon()
+{
+	PIMAGE NowOption = newimage();
+	getimage(NowOption, 0, 0, 1536, 200);
+	char buf[100] = {};
+	/*è¾“å…¥å¹¶è®°å½•å¤šè¾¹å½¢è¾¹æ•°ï¼Œå½“è¾¹æ•°å°äº3æ—¶ä¸ç»˜åˆ¶ç›´æ¥è¿”å›*/
+	inputbox_getline("å¤šè¾¹å½¢è¾¹æ•°é€‰æ‹©", "è¯·è¾“å…¥å¤šè¾¹å½¢è¾¹æ•°", buf, 4);
+	int side = atoi(buf);
+	if (side < 3)
+	{
+		inputbox_getline("å¤šè¾¹å½¢è¾¹æ•°é€‰æ‹©", "è¾“å…¥æœ‰è¯¯ï¼\nè¯·è¾“å…¥æ­£ç¡®çš„å¤šè¾¹å½¢è¾¹æ•°ï¼\næŒ‰å›è½¦è¿”å›æ“ä½œç•Œé¢", buf, 2);
+		return;
+	}
+	inputbox_getline("å¤šè¾¹å½¢åæ ‡è¾“å…¥", "è¯·ä»¥x1ï¼Œy1ï¼Œx2ï¼Œy2......çš„å½¢å¼è¾“å…¥å¤šè¾¹å½¢åæ ‡\nåæ ‡ä¹‹é—´ç”¨ç©ºæ ¼éš”å¼€\nï¼ˆæç¤ºï¼Œç”»å›¾åŒºåŸŸå¤§å°ä¸º1536X664(ä¸åŒ…å«è¾¹ç•Œï¼‰,è¯·ä¸è¦è¶Šç•Œï¼‰", buf, 50);
+	/*å°†bufçš„const char*ç±»å‹å˜ä¸ºBufçš„char*ç±»å‹ï¼Œä¾¿äºåç»­æ“ä½œ*/
+	char* Buf = buf;
+	int pt[100] = {};
+	RMake[Save].coor[0].x = RMake[Save].coor[0].y = side;
+	for (int n = 1;n <= side;++n)
+	{
+		/*è‹¥è¾“å…¥å­˜åœ¨é”™è¯¯ï¼Œåˆ™strstrå‡½æ•°æ‰¾ä¸åˆ°å¯¹è±¡å¯èƒ½è¿”å›NULL*/
+		if (Buf == NULL)
+		{
+			/*æ¸…é™¤ä»¥ä¿å­˜å†…å®¹å¹¶è¿”å›é”™è¯¯æ¶ˆæ¯*/
+			inputbox_getline("å¤šè¾¹å½¢åæ ‡è¾“å…¥", "è¾“å…¥æœ‰è¯¯ï¼Œè¯·æ­£ç¡®è¾“å…¥åæ ‡\næŒ‰å›è½¦è¿”å›æ“ä½œç•Œé¢", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		/*atoiå‡½æ•°ä»…ä¼šè¯»å–é‡åˆ°çš„ç¬¬ä¸€ä¸ªæ•°å­—ï¼Œé‡åˆ°ç©ºæ ¼ä¼šç›´æ¥ç»“æŸè¯»å–*/
+		int x = atoi(Buf);
+		Buf = strstr(Buf, " ");
+		if (Buf == NULL)
+		{
+			inputbox_getline("å¤šè¾¹å½¢åæ ‡è¾“å…¥", "è¾“å…¥æœ‰è¯¯ï¼Œè¯·æ­£ç¡®è¾“å…¥åæ ‡\næŒ‰å›è½¦è¿”å›æ“ä½œç•Œé¢", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		/*è·³è¿‡æ‰¾åˆ°çš„é‚£ä¸ªç©ºæ ¼ï¼Œé˜²æ­¢strstrå‡½æ•°é‡å¤æŸ¥æ‰¾è¿™ä¸€å†…å®¹*/
+		Buf++;
+		int y = atoi(Buf) + 200;
+		RMake[Save].coor[n].x = x;
+		RMake[Save].coor[n].y = y;
+		Buf = strstr(Buf, " ");
+		pt[(2 * n) - 2] = x;
+		pt[(2 * n) - 1] = y;
+		if (x == 0 || y == 0 || (n != side && Buf == NULL))
+		{
+			inputbox_getline("å¤šè¾¹å½¢åæ ‡è¾“å…¥", "è¾“å…¥æœ‰è¯¯ï¼Œè¯·æ­£ç¡®è¾“å…¥åæ ‡\næŒ‰å›è½¦è¿”å›æ“ä½œç•Œé¢", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		if (x <= 0 || y <= 0 || x > 1536 || y > 864)
+		{
+			/*è‹¥è¾“å…¥è¶Šè¿‡ç”»å›¾èŒƒå›´ï¼Œåˆ™è¿”å›é”™è¯¯ä¿¡æ¯*/
+			inputbox_getline("å¤šè¾¹å½¢åæ ‡è¾“å…¥", "è¾“å…¥è¶Šç•Œï¼Œè¯·æ­£ç¡®è¾“å…¥åæ ‡\næŒ‰å›è½¦è¿”å›æ“ä½œç•Œé¢", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		Buf++;
+	}
+	fillpoly(side, pt);
+	/*ç›¸å½“äºæ’¤é”€é‡åšçš„åˆå§‹åŒ–éƒ¨åˆ†*/
+	Save += 1;
+	if (Undo_Or_Not == true)
+	{
+		Draw_Modes New;
+		New.Mode = -1;
+		for (int a = Save;a <= MAX;++a)
+			RMake[a - 1] = New;
+		Undo_Or_Not = false;
+	}
+	RMake[Save - 1].Width = width;
+	RMake[Save - 1].Color = getcolor();
+	RMake[Save - 1].Mode = Homework_Polygon;
+	putimage(0, 0, NowOption);
+	delimage(NowOption);
 }
