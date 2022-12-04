@@ -130,12 +130,17 @@ int main()
 					}
 					else
 					{
-						if (m.x < (BlockDrawStart + 2*BlockDraw))
+						if (m.x < (BlockDrawStart + BlockDraw))
 						{
 							Modes = LINE;
 							putimage(BlockDrawStart, 0, NewOption);
-							putimage(BlockDrawStart, 50, Draw_Line);
+							putimage(BlockDrawStart, 100, Draw_Line);
 							continue;
+						}
+						if (m.x < (BlockDrawStart + 2 * BlockDraw))
+						{
+							Modes = Homework_Polygon;
+							Draw_Homework_Polygon();
 						}
 					}
 				}

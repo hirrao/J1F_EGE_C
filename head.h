@@ -32,7 +32,8 @@ enum DrawWays
 	CLEAR = 1,																//本次操作为清屏（仅清屏时保留）
 	PIXEL = 2,																//铅笔	
 	LINE = 3,																//画线
-	CIRCLE = 4																//画圆
+	CIRCLE = 4,																//画圆
+	Homework_Polygon = 5                                                    //键盘操作画多边形
 };
 /*存储本次操作的坐标*/
 typedef struct coordinate
@@ -64,3 +65,4 @@ void ClearDevice();															//清屏模块（限定仅限绘图区域的�
 void SetColor(mouse_msg mouse);												//修改颜色模块
 bool FunOpen();																//打开文件
 void SaveFile();															//保存文件
+void Draw_Homework_Polygon();                                               //键盘操作画多边形函数

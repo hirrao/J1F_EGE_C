@@ -37,11 +37,11 @@ void Draw_Redo_Init(int Num, ...)
 	RMake[Save - 1].Color = getcolor();
 	RMake[Save - 1].Mode = Modes;
 	RMake[Save - 1].Width = width;
-	for (int a = 0;a < Num;++a)
+	for (int a = 1;a <= Num;++a)
 	{
 		mouse_msg m = va_arg(New, mouse_msg);
-		RMake[Save-1].coor[a].x = m.x;
-		RMake[Save-1].coor[a].y = m.y;
+		RMake[Save - 1].coor[a].x = m.x;
+		RMake[Save - 1].coor[a].y = m.y;
 	}
 	va_end(New);
 	return;
@@ -65,10 +65,13 @@ void Redo(int Num)
 	switch (NowIM.Mode)
 	{
 	case CLEAR:
+	{
 		ClearDevice();
 		Save += 1;
 		break;
+	}
 	case PIXEL:
+	{
 		for (int n = 2;n < NowIM.pixel_[0].x;++n)
 		{
 			coordinate* coors = NowIM.pixel_;
@@ -76,15 +79,32 @@ void Redo(int Num)
 		}
 		Save += 1;
 		break;
+	}
 	case LINE:
-		ege_line(float(NowIM.coor[0].x), float(NowIM.coor[0].y), float(NowIM.coor[1].x), float(NowIM.coor[1].y));
+	{
+		ege_line(float(NowIM.coor[1].x), float(NowIM.coor[1].y), float(NowIM.coor[2].x), float(NowIM.coor[2].y));
 		Save += 1;
 		break;
+	}
 	case CIRCLE:
-		float r = float(sqrt(pow(double(NowIM.coor[1].x - NowIM.coor[0].x), 2) + pow(double(NowIM.coor[1].y - NowIM.coor[0].y), 2)));
-		ege_ellipse(NowIM.coor[0].x - r, NowIM.coor[0].y - r, 2 * r, 2 * r);
+	{
+		float r = float(sqrt(pow(double(NowIM.coor[2].x - NowIM.coor[1].x), 2) + pow(double(NowIM.coor[2].y - NowIM.coor[1].y), 2)));
+		ege_ellipse(NowIM.coor[1].x - r, NowIM.coor[1].y - r, 2 * r, 2 * r);
 		Save += 1;
 		break;
+	}
+	case Homework_Polygon:
+	{
+		int pt[100] = {};
+		for (int n = 0;n < NowIM.coor[0].x;++n)
+		{
+			pt[2 * n] = NowIM.coor[n + 1].x;
+			pt[2 * n + 1] = NowIM.coor[n + 1].y;
+		}
+		fillpoly(NowIM.coor[0].x, pt);
+		Save += 1;
+		break;
+	}
 	}
 	putimage(0, 0, NowOption);
 	delimage(NowOption);

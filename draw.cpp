@@ -110,3 +110,76 @@ void Draw_Circle(mouse_msg mouse)
 		}
 	}
 }
+
+void Draw_Homework_Polygon()
+{
+	PIMAGE NowOption = newimage();
+	getimage(NowOption, 0, 0, 1536, 200);
+	char buf[100] = {};
+	inputbox_getline("多边形边数选择", "请输入多边形边数", buf, 4);
+	int side = atoi(buf);
+	if (side < 3)
+	{
+		inputbox_getline("多边形边数选择", "输入有误！\n请输入正确的多边形边数！\n按回车返回操作界面", buf, 2);
+		return;
+	}
+	inputbox_getline("多边形坐标输入", "请以x1，y1，x2，y2......的形式输入多边形坐标\n坐标之间用空格隔开\n（提示，画图区域大小为1536X664(不包含边界）,请不要越界）", buf, 50);
+	char* Buf = buf;
+	int pt[100] = {};
+	RMake[Save].coor[0].x = RMake[Save].coor[0].y = side;
+	for (int n = 1;n <= side;++n)
+	{
+		if (Buf == NULL)
+		{
+			inputbox_getline("多边形坐标输入", "输入有误，请正确输入坐标\n按回车返回操作界面", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		int x = atoi(Buf);
+		Buf = strstr(Buf, " ");
+		if (Buf == NULL)
+		{
+			inputbox_getline("多边形坐标输入", "输入有误，请正确输入坐标\n按回车返回操作界面", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		Buf++;
+		int y = atoi(Buf) + 200;
+		RMake[Save].coor[n].x = x;
+		RMake[Save].coor[n].y = y;
+		Buf = strstr(Buf, " ");
+		pt[(2 * n) - 2] = x;
+		pt[(2 * n) - 1] = y;
+		if (x == 0 || y == 0 || (n != side && Buf == NULL))
+		{
+			inputbox_getline("多边形坐标输入", "输入有误，请正确输入坐标\n按回车返回操作界面", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		if (x <= 0 || y <= 0 || x > 1536 || y > 864)
+		{
+			inputbox_getline("多边形坐标输入", "输入越界，请正确输入坐标\n按回车返回操作界面", buf, 3);
+			Draw_Modes ne;
+			RMake[Save] = ne;
+			return;
+		}
+		Buf++;
+	}
+	fillpoly(side, pt);
+	Save += 1;
+	if (Undo_Or_Not == true)
+	{
+		Draw_Modes New;
+		New.Mode = -1;
+		for (int a = Save;a <= MAX;++a)
+			RMake[a - 1] = New;
+		Undo_Or_Not = false;
+	}
+	RMake[Save - 1].Color = getcolor();
+	RMake[Save - 1].Mode = Homework_Polygon;
+	putimage(0, 0, NowOption);
+	delimage(NowOption);
+}
