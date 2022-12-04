@@ -3,7 +3,6 @@ int Modes = -1;
 bool Line_Mode = 0;
 int Save = 0;
 double width = 1;
-int N[MAX] = {};
 extern Draw_Modes* RMake = (Draw_Modes*)malloc(MAX * sizeof(Draw_Modes));
 bool Undo_Or_Not = false;
 int main()
@@ -19,11 +18,11 @@ int main()
 	setfillcolor(EGEACOLOR(0xFF, BLACK));
 	setbkcolor(WHITE);
 	cleardevice();
+	/*初始化各个图标与全局变量*/
 	PIMAGE Option = newimage();
 	getimage(Option, TEXT("JPG"), MAKEINTRESOURCE(IMAGEOPTION));
 	putimage(0, 0, Option);
 	delimage(Option);
-	/*初始化各个图标与全局变量*/
 	PIMAGE NewOption = newimage();
 	getimage(NewOption, TEXT("JPG"), MAKEINTRESOURCE(NEWOPTION));
 	PIMAGE Draw_Line = newimage();

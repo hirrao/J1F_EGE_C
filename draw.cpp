@@ -42,17 +42,17 @@ void ClearDevice()
 
 void Draw_Pixel(mouse_msg mouse)
 {
-	RMake[Save].pixel_ = (coordinate*)malloc(MAX * sizeof(coordinate));
-	if (RMake[Save].pixel_ == nullptr)
+	Draw_Undo_Init();
+	RMake[Save-1].pixel_ = (coordinate*)malloc(MAX * sizeof(coordinate));
+	if (RMake[Save-1].pixel_ == nullptr)
 	{
 		return;
 	}
-	coordinate* coors = RMake[Save].pixel_;
-	coors[0].x = mouse.x;
-	coors[0].y = mouse.y;
-	N[0]++;
+	coordinate* coors = RMake[Save-1].pixel_;
+	coors[1].x = mouse.x;
+	coors[1].y = mouse.y;
 	flushmouse();
-	for (int n = 1;is_run();delay_fps(300))
+	for (int n = 2;is_run();delay_fps(300))
 	{
 		mouse_msg m = getmouse();
 		coors[n].x = m.x;
@@ -61,10 +61,10 @@ void Draw_Pixel(mouse_msg mouse)
 		n++;
 		if (m.is_up())
 		{
-			RMake[Save].Mode = PIXEL;
-			RMake[Save].Color = getcolor();
-			N[N[0]] = n;
-			Draw_Undo_Init();
+			RMake[Save-1].Mode = PIXEL;
+			RMake[Save-1].Color = getcolor();
+			RMake[Save-1].Width = width;
+			coors[0].x = coors[0].y = n;
 			return;
 		}
 	}

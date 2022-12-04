@@ -14,7 +14,6 @@ extern int Modes;															//当前绘图模式
 extern int Save;															//当前存储的图形数量
 extern bool Undo_Or_Not;													//是否在撤销后又重新绘图
 extern double width;														//当前线宽
-extern int N[MAX];
 /*区块长宽枚举*/
 enum BLOCKS
 {
