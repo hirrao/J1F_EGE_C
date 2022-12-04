@@ -132,24 +132,9 @@ int main()
 					{
 						if (m.x < (BlockDrawStart + 2*BlockDraw))
 						{
-							if (m.is_right())
-								Line_Mode = !Line_Mode;
-							Modes = LINE + 100 * Line_Mode;
-							if (m.is_left())
-								Modes = LINE;
+							Modes = LINE;
 							putimage(BlockDrawStart, 0, NewOption);
-							if (Modes == LINE)
-								putimage(BlockDrawStart, BlockY, Draw_Line);
-							else
-							{
-								if (m.is_right())
-								{
-									char inputs[3] = {};
-									inputbox_getline("多边形边数选择", "请输入多边形边数", inputs, 2);
-									Modes += atoi(inputs);
-								}
-								//putimage(BlockDrawStart, BlockY, Draw_Polygon);
-							}
+							putimage(BlockDrawStart, 50, Draw_Line);
 							continue;
 						}
 					}
