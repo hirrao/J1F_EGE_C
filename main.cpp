@@ -1,8 +1,8 @@
 ﻿#include "head.h"
 int Modes = -1;
-bool Line_Mode = 0;
 int Save = 0;
 double width = 1;
+/*分配堆空间，并将所有绘图信息保存于堆空间中*/
 extern Draw_Modes* RMake = (Draw_Modes*)malloc(MAX * sizeof(Draw_Modes));
 bool Undo_Or_Not = false;
 int main()
