@@ -65,10 +65,31 @@ void ReadFromFile(TCHAR* fn)
 	for (;is_run();delay_fps(FPS))
 	{
 		int n=fwscanf(openfile, _T("%d "), &ReadMode);
-		if (n == -1)
+		if (n <= 0)
 			return;
 		switch (ReadMode)
 		{
+		case 2:
+		{
+			int* XY = (int*)malloc(MAX * 2 * sizeof(int));
+			int r = 0, g = 0, b = 0;
+			double wi = 0;
+			int N = 0;
+			fwscanf(openfile, _T("%d "), &N);
+			for (int a = 0;a < (2 * N - 2);++a)
+			{
+				fwscanf(openfile, _T("%d "), &XY[a]);
+			}
+			fwscanf(openfile, _T("%d %d %d %lf"), &r, &g, &b, &wi);
+			setlinewidth(wi);
+			setcolor(EGEACOLOR(0xFF, EGERGB(r, g, b)));
+			for (int a = 2;a < (2 * N - 2);a = a + 2)
+			{
+				ege_line(XY[a - 2], XY[a - 1], XY[a], XY[a + 1]);
+			}
+			free(XY);
+			break;
+		}
 		case 3:
 		{
 			int x1 = 0, x2 = 0, y1 = 0, y2 = 0, r = 0, g = 0, b = 0;
@@ -90,6 +111,22 @@ void ReadFromFile(TCHAR* fn)
 			ege_ellipse(x1 - R, y1 - R, 2 * R, 2 * R);
 			break;
 		}
+		case 5:
+		{
+			int pt[100] = {};
+			int r = 0, g = 0, b = 0;
+			double wi = 0;
+			int N = 0;
+			fwscanf(openfile, _T("%d "), &N);
+			for (int n = 0;n < N;++n)
+			{
+				fwscanf(openfile, _T("%d %d "), &pt[2 * n], &pt[2 * n + 1]);
+			}
+			setlinewidth(wi);
+			setcolor(EGEACOLOR(0xFF, EGERGB(r, g, b)));
+			fillpoly(N, pt);
+			break;
+		}
 		}
 	}
 }
@@ -103,14 +140,18 @@ void SaveFile()
 	ofn.lpstrFile = filename;
 	ofn.nMaxFile = sizeof(filename) / sizeof(*filename);
 	ofn.nFilterIndex = 0;
-	ofn.lpstrDefExt = _T(".txt");
+	ofn.lpstrDefExt = _T(".draw");
 	ofn.Flags = OFN_FILEMUSTEXIST | OFN_EXPLORER | OFN_OVERWRITEPROMPT;
 	BOOL saveok = GetSaveFileName(&ofn);
+	if (saveok != 1)
+		return;
 	savefiles = _wfopen(filename,_T("w"));
 	for (int a = 0;a < Save;++a)
 	{
 		WriteToFile(RMake[a]);
 	}
+	fclose(savefiles);
+	savefiles = nullptr;
 	return;
 }
 
@@ -125,6 +166,16 @@ void WriteToFile(Draw_Modes IM)
 		savefiles = _wfopen(filename, _T("w"));
 		break;
 	}
+	case PIXEL:
+	{
+		fwprintf(savefiles, _T("2 %04d "),IM.pixel_[0].x);
+		for (int n = 1;n < IM.pixel_[0].x;++n)
+		{
+			fwprintf(savefiles, _T("%04d %04d "), IM.pixel_[n].x, IM.pixel_[n].y);
+		}
+		fwprintf(savefiles, _T("%04d %04d %04d %.04lf\n"), EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
+		break;
+	}
 	case LINE:
 	{
 		fwprintf(savefiles, _T("3 %04d %04d %04d %04d %04d %04d %04d %.04lf\n"), IM.coor[1].x, IM.coor[1].y, IM.coor[2].x, IM.coor[2].y, EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
@@ -133,6 +184,16 @@ void WriteToFile(Draw_Modes IM)
 	case CIRCLE:
 	{
 		fwprintf(savefiles, _T("4 %04d %04d %04d %04d %04d %04d %04d %.04lf\n"), IM.coor[1].x, IM.coor[1].y, IM.coor[2].x, IM.coor[2].y, EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
+		break;
+	}
+	case Homework_Polygon:
+	{
+		fwprintf(savefiles, _T("5 %04d "), IM.coor[0].x);
+		for (int n = 0;n < IM.coor[0].x;++n)
+		{
+			fwprintf(savefiles, _T("%04d %04d "), IM.coor[n + 1].x, IM.coor[n + 1].y);
+		}
+		fwprintf(savefiles, _T("%04d %04d %04d %.04lf\n"), EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
 		break;
 	}
 	}
