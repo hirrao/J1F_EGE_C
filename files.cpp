@@ -69,7 +69,7 @@ void ReadFromFile(TCHAR* fn)
 			return;
 		switch (ReadMode)
 		{
-		case 1:
+		case 3:
 		{
 			int x1 = 0, x2 = 0, y1 = 0, y2 = 0, r = 0, g = 0, b = 0;
 			double wi = 0;
@@ -77,6 +77,17 @@ void ReadFromFile(TCHAR* fn)
 			setlinewidth(wi);
 			setcolor(EGEACOLOR(0xFF, EGERGB(r, g, b)));
 			ege_line(x1, y1, x2, y2);
+			break;
+		}
+		case 4:
+		{
+			int x1 = 0, x2 = 0, y1 = 0, y2 = 0, r = 0, g = 0, b = 0;
+			double wi = 0;
+			fwscanf(openfile, _T("%d %d %d %d %d %d %d %lf\n"), &x1, &y1, &x2, &y2, &r, &g, &b, &wi);
+			setlinewidth(wi);
+			setcolor(EGEACOLOR(0xFF, EGERGB(r, g, b)));
+			float R = float(sqrt(pow(double(x2 - x1), 2) + pow(double(y2 - y1), 2)));
+			ege_ellipse(x1 - R, y1 - R, 2 * R, 2 * R);
 			break;
 		}
 		}
@@ -116,7 +127,13 @@ void WriteToFile(Draw_Modes IM)
 	}
 	case LINE:
 	{
-		fwprintf(savefiles, _T("1 %04d %04d %04d %04d %04d %04d %04d %.04lf\n"), IM.coor[1].x, IM.coor[1].y, IM.coor[2].x, IM.coor[2].y, EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
+		fwprintf(savefiles, _T("3 %04d %04d %04d %04d %04d %04d %04d %.04lf\n"), IM.coor[1].x, IM.coor[1].y, IM.coor[2].x, IM.coor[2].y, EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
+		break;
+	}
+	case CIRCLE:
+	{
+		fwprintf(savefiles, _T("4 %04d %04d %04d %04d %04d %04d %04d %.04lf\n"), IM.coor[1].x, IM.coor[1].y, IM.coor[2].x, IM.coor[2].y, EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
+		break;
 	}
 	}
 	return;
