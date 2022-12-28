@@ -1,5 +1,8 @@
 ﻿#include"head.h"
 PIMAGE Read = nullptr;
+FILE* savefiles = nullptr;
+TCHAR filename[MAX_PATH] = _T("newimage");
+TCHAR FileName[MAX_PATH] = {};
 bool FunOpen()
 {
 	PIMAGE ImageOpen = newimage();
@@ -19,10 +22,9 @@ bool FunOpen()
 				/*读取文件部分（暂时以PNG格式保存与读取文件）*/
 				else if (m.x > 500 && m.x < 1050 && m.y>280 && m.y < 380)
 				{
-					char str[2];
+					char str[2] = {};
 					while (1)
 					{
-						TCHAR FileName[MAX_PATH] = { 0 };
 						OPENFILENAME ofn = { 0 };
 						ofn.lStructSize = sizeof(ofn);
 						ofn.lpstrFilter = _T("图像文件(*.draw)\0*.draw\0\0");
@@ -36,20 +38,13 @@ bool FunOpen()
 						{
 							return false;
 						}
-						ReadOk = getimage(Read, FileName);
-						if (ReadOk != 0)
-						{
-							inputbox_getline("控制面板", "读取失败！！\n请输入任意键返回开始界面", str, 2);
-							return false;
-						}
 						return true;
 					}
 				}
 				/*不读取文件*/
 				else if (m.x > 500 && m.x < 1050 && m.y>480 && m.y < 580)
 				{
-					delimage(Read);
-					Read = nullptr;
+					FileName[250] = 1;
 					return true;
 				}
 				/*进入帮助部分*/
@@ -63,25 +58,67 @@ bool FunOpen()
 	return false;//未知错误时返回
 }
 
-/*将文件保存为PNG格式（后缀为DRAW）*/
+void ReadFromFile(TCHAR* fn)
+{
+	FILE* openfile = _wfopen(fn, _T("r"));
+	int ReadMode = -1;
+	for (;is_run();delay_fps(FPS))
+	{
+		int n=fwscanf(openfile, _T("%d "), &ReadMode);
+		if (n == -1)
+			return;
+		switch (ReadMode)
+		{
+		case 1:
+		{
+			int x1 = 0, x2 = 0, y1 = 0, y2 = 0, r = 0, g = 0, b = 0;
+			double wi = 0;
+			fwscanf(openfile, _T("%d %d %d %d %d %d %d %lf\n"), &x1, &y1, &x2, &y2, &r, &g, &b, &wi);
+			setlinewidth(wi);
+			setcolor(EGEACOLOR(0xFF, EGERGB(r, g, b)));
+			ege_line(x1, y1, x2, y2);
+			break;
+		}
+		}
+	}
+}
+
 void SaveFile()
 {
-	PIMAGE SaveImage = newimage();
-	getimage(SaveImage, 0, 200, 1536, 664);
-	TCHAR filename[MAX_PATH] = _T("image.draw");
 	OPENFILENAME ofn = { 0 };
 	ofn.lStructSize = sizeof(ofn);
 	ofn.lpstrFilter = _T("图像文件(*.draw)\0*.draw\0\0");
-	ofn.lpstrInitialDir = _T(".\\Images\\");
+	ofn.lpstrInitialDir = _T("./Images/");
 	ofn.lpstrFile = filename;
 	ofn.nMaxFile = sizeof(filename) / sizeof(*filename);
 	ofn.nFilterIndex = 0;
+	ofn.lpstrDefExt = _T(".txt");
 	ofn.Flags = OFN_FILEMUSTEXIST | OFN_EXPLORER | OFN_OVERWRITEPROMPT;
 	BOOL saveok = GetSaveFileName(&ofn);
-	if (saveok == 0)
-		return;
-	saveimage(SaveImage, filename);
-	delimage(SaveImage);
+	savefiles = _wfopen(filename,_T("w"));
+	for (int a = 0;a < Save;++a)
+	{
+		WriteToFile(RMake[a]);
+	}
+	return;
+}
+
+void WriteToFile(Draw_Modes IM)
+{
+	switch (IM.Mode)
+	{
+	case CLEAR:
+	{
+		fclose(savefiles);
+		savefiles = nullptr;
+		savefiles = _wfopen(filename, _T("w"));
+		break;
+	}
+	case LINE:
+	{
+		fwprintf(savefiles, _T("1 %04d %04d %04d %04d %04d %04d %04d %.04lf\n"), IM.coor[1].x, IM.coor[1].y, IM.coor[2].x, IM.coor[2].y, EGEGET_R(IM.Color), EGEGET_G(IM.Color), EGEGET_B(IM.Color), IM.Width);
+	}
+	}
 	return;
 }
 

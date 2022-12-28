@@ -52,6 +52,9 @@ typedef struct Draw_Modes
 }Draw_Modes;
 extern Draw_Modes* RMake;													//完整绘图信息的保存
 extern PIMAGE Read;															//指向以读取的图像的指针（暂时以图片形式执行）
+extern FILE* savefiles;
+extern TCHAR filename[MAX_PATH];
+extern TCHAR FileName[MAX_PATH];
 /*以下是各种函数的声明*/
 mouse_msg StartDraw(mouse_msg mouse);
 void Undo();																//撤销部分
@@ -67,3 +70,5 @@ void SetColor(mouse_msg mouse);												//修改颜色模块
 bool FunOpen();																//打开文件
 void SaveFile();															//保存文件
 void Draw_Homework_Polygon();                                               //键盘操作画多边形函数
+void WriteToFile(Draw_Modes IM);
+void ReadFromFile(TCHAR* fn);
