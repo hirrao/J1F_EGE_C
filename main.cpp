@@ -31,9 +31,11 @@ int main()
 	getimage(Draw_Circle, TEXT("JPG"), MAKEINTRESOURCE(DRAW_CIRCLE));
 	PIMAGE Draw_Pixel = newimage();
 	getimage(Draw_Pixel, TEXT("JPG"), MAKEINTRESOURCE(DRAW_PIXEL));
-	if (Read != nullptr)
-		putimage(0, 2 * BlockY, Read);
-	PIMAGE StartImage = newimage();
+	if (FileName[250] != 1)
+		ReadFromFile(FileName);
+	setcolor(EGEACOLOR(0xFF, BLACK));
+	setfillcolor(EGEACOLOR(0xFF, BLACK));
+	setbkcolor(WHITE);
 	flushmouse();
 	for (;is_run();delay_fps(FPS))
 	{
